@@ -82,6 +82,26 @@ Current findings:
 - Integrate a pretrained DDSP baseline
 - Perform cross-pitch timbre transfer and residual analysis
 
+## Preliminary Results
+
+Preliminary experiments have been completed for flute notes C4, E4, and A4.
+
+The current implementation includes:
+
+- Waveform and FFT analysis
+- STFT spectrogram analysis
+- Harmonic amplitude extraction
+- Amplitude-envelope extraction
+- Basic additive synthesis
+- Envelope-based additive synthesis
+- Time-varying harmonic additive synthesis
+- Basic two-operator FM synthesis
+- Automatic FM parameter fitting
+- Constrained multi-start FM optimisation
+
+Selected figures are available in the `results` folder, and representative synthesized audio files are available in the `audio_output` folder.
+
+The current results show that time-varying harmonic modelling better captures the temporal evolution of the reference flute tones than fixed-amplitude additive synthesis. For FM synthesis, constrained multi-start optimisation produces lower spectral error than the initial unconstrained fitting approach.
 
 ## Platform
 
