@@ -61,28 +61,27 @@ What does the learned DDSP model capture that remains in the residual error of c
 ## Current Progress
 
 Completed:
-- Project topic and initial proposal
-- Literature review of additive synthesis, FM synthesis, timbre modelling, and spectral modelling
-- Revised research question based on project feedback
-- Defined flute C4, E4, and A4 as the primary experimental notes
-- Defined additive synthesis, FM synthesis, and pretrained DDSP as the main comparison framework
+- Reference flute recordings collected for C4, E4, and A4
+- Waveform, FFT, STFT, harmonic and amplitude-envelope analysis
+- Basic additive synthesis
+- Envelope-based additive synthesis
+- Time-varying harmonic additive synthesis
+- Basic two-operator FM synthesis
+- Automatic FM parameter fitting
+- Constrained multi-start FM optimisation
+- Preliminary audio and spectral comparison results
 
-Currently in progress:
-- Collecting and preparing isolated flute recordings
-- MATLAB analysis of waveform, spectrum, spectrogram, harmonics, and amplitude envelope
-- Initial implementation of additive and FM synthesis
+Current findings:
+- Time-varying harmonic modelling provides a more realistic representation than fixed-amplitude additive synthesis.
+- Multi-start constrained FM fitting substantially reduces spectral cost compared with the initial unconstrained FM fitting.
+- Different FM initialisations converge to different local solutions, showing the importance of multi-start optimisation.
 
 ## Next Steps
+- Organise quantitative comparison metrics across synthesis methods
+- Compare additive and FM results more systematically
+- Integrate a pretrained DDSP baseline
+- Perform cross-pitch timbre transfer and residual analysis
 
-1. Analyse the real flute C4, E4, and A4 recordings.
-2. Implement additive synthesis in MATLAB.
-3. Implement two-operator FM synthesis in MATLAB.
-4. Generate preliminary synthesis results.
-5. Compare the generated tones with the real recordings.
-6. Add automatic parameter fitting.
-7. Perform leave-one-pitch-out timbre transfer experiments.
-8. Add the pretrained DDSP flute baseline.
-9. Perform residual analysis and final evaluation.
 
 ## Platform
 
