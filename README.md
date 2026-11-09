@@ -113,14 +113,25 @@ These results suggest that additive synthesis more accurately represents explici
 
 This stage evaluates independently fitted tones. The next experiment uses leave-one-pitch-out testing to determine whether the learned timbre parameters transfer to an unseen pitch.
 
+## Cross-Pitch Timbre Transfer
+
+Leave-one-pitch-out experiments were conducted to test whether the classical synthesis models capture pitch-independent flute timbre rather than only reconstructing individually fitted notes.
+
+Three transfer folds were evaluated: C4 and E4 were used to predict A4, C4 and A4 were used to predict E4, and E4 and A4 were used to predict C4. For additive synthesis, shared relative harmonic amplitudes and a shared temporal-envelope profile were estimated from the two training pitches. For FM synthesis, shared carrier ratio, modulator ratio, and modulation index parameters were derived from the training pitches and transferred to the held-out fundamental frequency.
+
+Under leave-one-pitch-out evaluation, additive synthesis retained substantially lower multi-resolution STFT error and harmonic amplitude error than FM synthesis. The mean multi-resolution STFT errors were 0.5676 for additive synthesis and 1.6828 for FM, while the corresponding harmonic amplitude errors were 0.0523 and 0.2218.
+
+Residual spectral analysis also showed a substantially larger overall missing spectral-energy measure for FM than for additive synthesis. However, the mean missing energy in the 2--5 kHz region was similar between the two methods, indicating that the perceptual difference is better explained by broader harmonic and spectral-structure mismatch than by high-frequency attenuation alone.
+
+The comparison between independently fitted reconstruction and leave-one-pitch-out transfer demonstrates that good reconstruction of a known pitch does not necessarily imply robust cross-pitch timbre transfer.
+
 ## Next Steps
 
-- Perform leave-one-pitch-out timbre transfer using C4, E4, and A4
-- Evaluate shared additive and FM timbre parameters on held-out pitches
 - Integrate a pretrained DDSP flute baseline
-- Compare Additive, FM, and DDSP using the same held-out-pitch evaluation framework
-- Perform residual spectral analysis
-- Prepare final comparison figures, discussion, and project documentation
+- Evaluate DDSP on the same C4, E4, and A4 reference tones
+- Compare Additive, FM, and DDSP using common evaluation metrics
+- Compare residual spectral structure across the three modelling approaches
+- Prepare final figures, discussion, and project documentation
 
 ## Platform
 
