@@ -33,7 +33,6 @@ What does the learned DDSP model capture that remains in the residual error of c
 ### Secondary instrument
 - Piano, for classical additive and FM comparison where time permits
 
-## Planned Methods
 
 ### Classical synthesis
 - Additive synthesis
@@ -58,36 +57,24 @@ What does the learned DDSP model capture that remains in the residual error of c
 - Pretrained DDSP instrument synthesis model
 - Flute will be used for the main Additive vs FM vs DDSP comparison
 
-## Current Progress
+## Final Implementation
 
-Completed:
-- Reference flute recordings collected for C4, E4, and A4
-- Waveform, FFT, STFT, harmonic and amplitude-envelope analysis
-- Basic additive synthesis
-- Envelope-based additive synthesis
-- Time-varying harmonic additive synthesis
-- Basic two-operator FM synthesis
-- Automatic FM parameter fitting
-- Constrained multi-start FM optimisation
-- Preliminary audio and spectral comparison results
-- Log-spectral distance evaluation
-- Multi-resolution STFT error evaluation
-- Harmonic amplitude error evaluation
-- Temporal-envelope error evaluation
+The final project focuses on flute timbre modelling using three synthesis approaches:
 
-Current findings:
-- Time-varying harmonic modelling provides a more realistic representation than fixed-amplitude additive synthesis.
-- Multi-start constrained FM fitting substantially reduces spectral cost compared with the initial unconstrained FM fitting.
-- Different FM initialisations converge to different local solutions, showing the importance of multi-start optimisation.
+- Time-varying additive synthesis
+- Constrained multi-start two-operator FM synthesis
+- A pretrained DDSP flute model
 
-## Preliminary Results
+Experiments were conducted using non-vibrato flute recordings at three target pitches:
 
-Preliminary experiments have been completed for flute notes C4, E4, and A4.
+- C4
+- E4
+- A4
 
-The current implementation includes:
+The implementation includes:
 
 - Waveform and FFT analysis
-- STFT spectrogram analysis
+- STFT and spectrogram analysis
 - Harmonic amplitude extraction
 - Amplitude-envelope extraction
 - Basic additive synthesis
@@ -96,47 +83,91 @@ The current implementation includes:
 - Basic two-operator FM synthesis
 - Automatic FM parameter fitting
 - Constrained multi-start FM optimisation
-
-Selected figures are available in the `results` folder, and representative synthesized audio files are available in the `audio_output` folder.
-
-The current results show that time-varying harmonic modelling better captures the temporal evolution of the reference flute tones than fixed-amplitude additive synthesis. For FM synthesis, constrained multi-start optimisation produces lower spectral error than the initial unconstrained fitting approach.
+- Pretrained DDSP flute resynthesis
+- Leave-one-pitch-out timbre-transfer experiments
+- Quantitative and residual spectral evaluation
 
 ## Quantitative Evaluation
 
-Independent reconstruction performance was evaluated for flute notes C4, E4, and A4 using four complementary metrics: log-spectral distance (LSD), multi-resolution STFT error, harmonic amplitude error, and temporal-envelope error.
+The final comparison evaluates Time-Varying Additive, Multi-Start FM, and DDSP using:
 
-The results show different strengths for the two classical synthesis approaches. Multi-start FM achieved lower log-spectral distance and slightly lower temporal-envelope error, while time-varying additive synthesis achieved substantially lower multi-resolution STFT error and harmonic amplitude error.
+- Log-Spectral Distance (LSD)
+- Multi-Resolution STFT Error
+- Harmonic Amplitude Error
+- Temporal-Envelope Error
+- Missing Spectral Energy
+- Missing High-Frequency Energy between 2 and 5 kHz
 
-Across the three notes, the mean multi-resolution STFT error was 0.1718 for time-varying additive synthesis and 1.6511 for multi-start FM. The mean harmonic amplitude error was 0.0189 for additive synthesis and 0.2590 for FM. The mean temporal-envelope error was 0.0201 for additive synthesis and 0.0132 for FM.
+All synthesis outputs are peak-normalised before the final quantitative comparison so that differences in output gain do not dominate the evaluation.
 
-These results suggest that additive synthesis more accurately represents explicit harmonic and time-frequency structure, whereas the fitted FM model can reproduce some global spectral and temporal characteristics with a more compact parameterisation.
+The results show that the three models capture different aspects of flute timbre.
 
-This stage evaluates independently fitted tones. The next experiment uses leave-one-pitch-out testing to determine whether the learned timbre parameters transfer to an unseen pitch.
+DDSP achieved the lowest mean Log-Spectral Distance, indicating the closest overall spectral match to the reference recordings.
 
-## Cross-Pitch Timbre Transfer
+Time-varying additive synthesis achieved substantially lower multi-resolution STFT and harmonic-amplitude errors, reflecting its explicit modelling of the measured harmonic structure and temporal evolution of each reference tone.
 
-Leave-one-pitch-out experiments were conducted to test whether the classical synthesis models capture pitch-independent flute timbre rather than only reconstructing individually fitted notes.
+Residual spectral analysis further showed that additive synthesis retained the lowest mean total missing spectral energy, while DDSP retained more high-frequency information in the 2--5 kHz region, particularly for the higher target pitches.
 
-Three transfer folds were evaluated: C4 and E4 were used to predict A4, C4 and A4 were used to predict E4, and E4 and A4 were used to predict C4. For additive synthesis, shared relative harmonic amplitudes and a shared temporal-envelope profile were estimated from the two training pitches. For FM synthesis, shared carrier ratio, modulator ratio, and modulation index parameters were derived from the training pitches and transferred to the held-out fundamental frequency.
+The compact two-operator FM model produced a valid controllable synthesis baseline but showed larger spectral and time-frequency reconstruction errors under the current model configuration.
 
-Under leave-one-pitch-out evaluation, additive synthesis retained substantially lower multi-resolution STFT error and harmonic amplitude error than FM synthesis. The mean multi-resolution STFT errors were 0.5676 for additive synthesis and 1.6828 for FM, while the corresponding harmonic amplitude errors were 0.0523 and 0.2218.
+## Leave-One-Pitch-Out Evaluation
 
-Residual spectral analysis also showed a substantially larger overall missing spectral-energy measure for FM than for additive synthesis. However, the mean missing energy in the 2--5 kHz region was similar between the two methods, indicating that the perceptual difference is better explained by broader harmonic and spectral-structure mismatch than by high-frequency attenuation alone.
+A leave-one-pitch-out experiment was also conducted to test whether timbre parameters estimated from two pitches could be transferred to a third unseen pitch.
 
-The comparison between independently fitted reconstruction and leave-one-pitch-out transfer demonstrates that good reconstruction of a known pitch does not necessarily imply robust cross-pitch timbre transfer.
+For additive synthesis, shared harmonic profiles were derived from the two available training pitches and applied to the held-out pitch.
 
-## Next Steps
+For FM synthesis, shared carrier/modulator relationships and modulation-index parameters were estimated from the available training pitches and transferred to the held-out pitch.
 
-- Integrate a pretrained DDSP flute baseline
-- Evaluate DDSP on the same C4, E4, and A4 reference tones
-- Compare Additive, FM, and DDSP using common evaluation metrics
-- Compare residual spectral structure across the three modelling approaches
-- Prepare final figures, discussion, and project documentation
+The leave-one-pitch-out results show a clear reduction in reconstruction accuracy compared with independently fitted models, demonstrating that compact classical timbre parameters do not transfer perfectly across pitch.
+
+## DDSP Baseline
+
+A pretrained DDSP flute model was evaluated as the modern synthesis baseline.
+
+The original DDSP automatic adjustment changed the input pitch range substantially for the lower flute tone. Therefore, the final comparison uses pitch-preserving inference with automatic adjustment disabled.
+
+The final DDSP outputs preserve the original target pitches C4, E4, and A4.
+
+The DDSP outputs exhibit different attack and decay behaviour from the reference recordings. An alignment check confirmed that this was primarily a difference in temporal-envelope reconstruction rather than a simple global timing offset.
+
+## Repository Structure
+
+```text
+audio_output/
+    Synthesised Additive, FM, LOPO, and DDSP audio
+
+results/
+    Preliminary analysis and synthesis figures
+
+results_02/
+    Final quantitative evaluation, LOPO, residual, and three-model results
+
+flute_analysis_01.mlx
+    Initial flute analysis and classical synthesis experiments
+
+final_evaluation_02.mlx
+    Final quantitative evaluation and leave-one-pitch-out experiments
+
+ddsp_timbre_transfer.ipynb
+    Pretrained DDSP flute timbre-transfer experiment
+```
+
+## Main Findings
+
+The results do not indicate that one synthesis method is uniformly superior.
+
+Time-varying additive synthesis provides strong reconstruction of explicitly measured harmonic and temporal structure.
+
+DDSP provides the closest overall spectral match and captures additional high-frequency spectral characteristics, but its temporal envelope differs more strongly from the reference recordings.
+
+Two-operator FM synthesis offers a compact parametric representation, although its restricted model structure leads to larger reconstruction errors for the flute tones used in this study.
+
+The leave-one-pitch-out experiment further demonstrates that pitch-independent timbre transfer is more difficult than independent fitting of individual notes.
 
 ## Platform
 
-- MATLAB for signal analysis, classical synthesis, optimisation, and evaluation
-- Python / command line only where required for the pretrained DDSP baseline
+- MATLAB for signal analysis, additive synthesis, FM synthesis, optimisation, quantitative evaluation, and leave-one-pitch-out experiments
+- Google Colab / Python for the pretrained DDSP flute model
 
 ## Project Proposal
 
@@ -144,4 +175,4 @@ The original project proposal is available in this repository.
 
 ## Project Status
 
-Project implementation in progress.
+Final implementation and quantitative evaluation completed.
