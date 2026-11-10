@@ -102,9 +102,9 @@ The mean Log-Spectral Distance across C4, E4, and A4 was:
 
 | Model | Mean LSD |
 |---|---:|
-| Time-Varying Additive | 43.6043 dB |
-| Multi-Start FM | 23.9054 dB |
-| **DDSP** | **21.3166 dB** |
+| Time-Varying Additive | 35.1632 dB |
+| Multi-Start FM | 24.5580 dB |
+| **DDSP** | **22.6958 dB** |
 
 DDSP therefore achieved the lowest overall Log-Spectral Distance.
 
