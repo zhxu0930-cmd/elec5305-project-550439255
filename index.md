@@ -317,6 +317,12 @@ Explicit classical models are strong when reconstructing measured and interpreta
 
 ---
 
+# Project Video
+
+The project demonstration video is available here:
+
+[**Watch the ELEC5305 Project Video**](ELEC5305_Project_Video_ZhanXu.mp4)
+
 # Project Files
 
 The main implementation files are:
