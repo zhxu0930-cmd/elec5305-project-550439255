@@ -199,9 +199,16 @@ Therefore, the larger DDSP temporal-envelope error is interpreted primarily as a
 
 # Audio Examples
 
+Reference flute recordings are from the [University of Iowa Electronic Music Studios Musical Instrument Samples (MIS)](https://theremin.music.uiowa.edu/MIS.html) collection.
 The following examples allow direct comparison of the final synthesis outputs.
 
 ## C4
+
+**Reference**
+
+<audio controls>
+  <source src="data/ddsp_input/Flute_C4_Reference.wav" type="audio/wav">
+</audio>
 
 **Time-Varying Additive**
 
@@ -225,6 +232,12 @@ The following examples allow direct comparison of the final synthesis outputs.
 
 ## E4
 
+**Reference**
+
+<audio controls>
+  <source src="data/ddsp_input/Flute_E4_Reference.wav" type="audio/wav">
+</audio>
+
 **Time-Varying Additive**
 
 <audio controls>
@@ -246,6 +259,12 @@ The following examples allow direct comparison of the final synthesis outputs.
 ---
 
 ## A4
+
+**Reference**
+
+<audio controls>
+  <source src="data/ddsp_input/Flute_A4_Reference.wav" type="audio/wav">
+</audio>
 
 **Time-Varying Additive**
 
